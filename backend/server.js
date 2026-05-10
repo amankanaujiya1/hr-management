@@ -11,7 +11,15 @@ process.on('unhandledRejection', (err) => {
   console.error('UNHANDLED REJECTION:', err);
 });
 // Middleware
-app.use(cors());
+const cors = require('cors');
+
+app.use(cors({
+  origin: [
+    'http://localhost:5173',           // local development
+    'https://hrmanagementsystem.netlify.app/'  // netlify url
+  ],
+  credentials: true
+}));
 app.use(express.json());
 
 // Test route
