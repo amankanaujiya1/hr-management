@@ -1,5 +1,5 @@
 const express = require('express');
-const cors = require('cors');
+const cors = require('cors'); // Keep this one
 require('dotenv').config();
 const connectDB = require('./config/db');
 
@@ -7,19 +7,22 @@ const app = express();
 
 // Connect to MongoDB
 connectDB();
+
 process.on('unhandledRejection', (err) => {
   console.error('UNHANDLED REJECTION:', err);
 });
+
 // Middleware
-const cors = require('cors');
+// (I removed the duplicate 'const cors' line from here)
 
 app.use(cors({
   origin: [
     'http://localhost:5173',           // local development
-    'https://hrmanagementsystem.netlify.app/'  // netlify url
+    'https://hrmanagementsystem.netlify.app'  // netlify url (Note: removed trailing slash for better matching)
   ],
   credentials: true
 }));
+
 app.use(express.json());
 
 // Test route
@@ -27,8 +30,7 @@ app.get('/', (req, res) => {
   res.json({ message: '✅ HR Management API is running' });
 });
 
-// Routes (we will add these one by one)
-
+// Routes
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/employees', require('./routes/employeeRoutes'));
 app.use('/api/jobs', require('./routes/jobRoutes'));
